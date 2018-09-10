@@ -115,19 +115,19 @@ post '/user_input_page_update' do
 		index_arr.each do |ind|
 			ind = client.escape(ind)
 			number_arr[counter] = client.escape(number_arr[counter])
-			client.query("UPDATE `usertable` SET `Number`='#{number_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{loginname}'")
+			client.query("UPDATE `usertable` SET `Number`='#{number_arr[counter]}' WHERE `Owner`='#{user_name_input}'")
 			name_arr[counter] = client.escape(name_arr[counter])
-			client.query("UPDATE `usertable` SET `Name`='#{name_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `name_input`='#{name_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			phone_number_arr[counter] = client.escape(phone_number_arr[counter])
-			client.query("UPDATE `usertable` SET `Phone`='#{phone_number_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `phone_number_input`='#{phone_number_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			address_arr[counter] = client.escape(address_arr[counter])
-			client.query("UPDATE `usertable` SET `Address`='#{address_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `address_input`='#{address_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			city_arr[counter] = client.escape(city_arr[counter])
-			client.query("UPDATE `usertable` SET `Name`='#{city_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `city_input`='#{city_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			state_arr[counter] = client.escape(state_arr[counter])
-			client.query("UPDATE `usertable` SET `Name`='#{state_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `state_input`='#{state_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			zip_arr[counter] = client.escape(zip_arr[counter])
-			client.query("UPDATE `usertable` SET `Name`='#{zip_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `zip_input`='#{zip_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			counter += 1
 		end
 	end
@@ -155,19 +155,19 @@ post '/user_input_page_delete' do
 		index_arr.each do |ind|
 			ind = client.escape(ind)
 			number_arr[counter] = client.escape(number_arr[counter])
-			client.query("UPDATE `usertable` SET `Number`='#{number_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{loginname}'")
+			client.query("UPDATE `usertable` SET `Number`='#{number_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			name_arr[counter] = client.escape(name_arr[counter])
-			client.query("UPDATE `usertable` SET `Name`='#{name_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `name_input`='#{name_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			phone_number_arr[counter] = client.escape(phone_number_arr[counter])
-			client.query("UPDATE `usertable` SET `Phone`='#{phone_number_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `phone_number_input`='#{phone_number_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			address_arr[counter] = client.escape(address_arr[counter])
-			client.query("UPDATE `usertable` SET `Address`='#{address_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `address_input`='#{address_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			city_arr[counter] = client.escape(city_arr[counter])
-			client.query("UPDATE `usertable` SET `Name`='#{city_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `city_input`='#{city_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			state_arr[counter] = client.escape(state_arr[counter])
-			client.query("UPDATE `usertable` SET `Name`='#{state_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `state_input`='#{state_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			zip_arr[counter] = client.escape(zip_arr[counter])
-			client.query("UPDATE `usertable` SET `Name`='#{zip_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `zip_input`='#{zip_arr[counter]}' WHERE `Index`='#{ind}' AND `Owner`='#{user_name_input}'")
 			counter += 1
 		end
 	end

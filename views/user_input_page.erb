@@ -5,7 +5,7 @@
 </head>
 <body>
 			<h1>Mike's Phone Book App</h1>
-			<h3><%=user_name_input%></h3>
+			<h3>Welcome <%=user_name_input%>!</h3>
 			<hr>
 			<h2>Contact Info</h2>
 			<form method="post" action="user_input_page_update">
@@ -28,15 +28,15 @@
 					 		<td><input type="text" name="name_arr[]" value="<%=stuff[1][0]%>" minlength="2" maxlength="30" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed" required></td>
 							<td><input type="text" name="phone_number_arr[]" value="<%=stuff[2][0]%>" minlength="10" maxlength="10" pattern="[0-9]+" title="Only numbers allowed" required></td>
 					 		<td><input type="text" name="address_arr[]" value="<%=stuff[3][0]%>" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed"></td>
-					 		<td><input type="text" name="city_arr[]" value="<%=stuff[3][0]%>" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed"></td>
-					 		<td><input type="text" name="state_arr[]" value="<%=stuff[3][0]%>" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed"></td>
-					 		<td><input type="text" name="zip_arr[]" value="<%=stuff[3][0]%>" maxlength="45" pattern="[0-9]+" title="Only numbers allowed"></td>
-					 		<input hidden type="text" name="owner_arr[]" value="<%=stuff[5][0]%>">
+					 		<td><input type="text" name="city_arr[]" value="<%=stuff[4][0]%>" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed"></td>
+					 		<td><input type="text" name="state_arr[]" value="<%=stuff[5][0]%>" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed"></td>
+					 		<td><input type="text" name="zip_arr[]" value="<%=stuff[6][0]%>" maxlength="45" pattern="[0-9]+" title="Only numbers allowed"></td>
+					 		<input hidden type="text" name="owner_arr[]" value="<%=stuff[7][0]%>">
 					 	</tr>
 					 	<%counter += 1%>						
 				 	<%end%>
 		 		</table><br>
-		 		<input class="button" type="submit" value="Update Info">
+		 		<input class="button" type="submit" value="Update">
 		 	</form>
 		 	<hr>
 		 	<h2>Add Contact</h2>
@@ -49,7 +49,7 @@
 				<input type="text" name="state_input" placeholder="State" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed">
 				<input type="text" name="zip_input" placeholder="Zip" maxlength="45" pattern="[0-9]+" title="Only numbers allowed">
 				<br><br>
-				<input class="button" type="submit" value="Add Info">				
+				<input class="button" type="submit" value="Add">				
 			</form>
 			<hr>
 			<h2>Delete Contact</h2>
@@ -66,10 +66,11 @@
 			 		<input hidden name="address_arr[]" value="<%=stuff[3][0]%>">
 					<input hidden name="city_arr[]" value="<%=stuff[4][0]%>">
 					<input hidden name="state_arr[]" value="<%=stuff[5][0]%>">	
-					<input hidden name="zip_arr[]" value="<%=stuff[6][0]%>"> 		
+					<input hidden name="zip_arr[]" value="<%=stuff[6][0]%>"> 
+					<input hidden name="owner_arr[]" value="<%=stuff[7][0]%>">		
 					<%counter += 1%>						
 			 	<%end%>
-		 		<input class="button" type="submit" value="Delete Contact">
+		 		<input class="button" type="submit" value="Delete">
 		 	</form>
 		</body>
 </div>
