@@ -1,0 +1,50 @@
+<center>
+<div class="box_div_login_page">
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/layout.css">
+</head>
+<body>
+<h1> Mike's Phone Book App </h1>
+<form method = "post" action = "login_page">
+<hr>
+<h3> Welcome! Please enter your username and password to continue. </h3>
+<hr>
+<center>
+<input type="text" id="username" name = "user_name_input" placeholder="Username" minlength="2" maxlength="25" pattern="[a-zA-Z0-9\s]+" title="Only one space allowed, no special characters allowed" required onfocus> 
+<br><br>
+<input type="text" id="password" name = "password" placeholder="Password" minlength="8" maxlength="12" pattern="[a-zA-Z0-9]+" title="No special characters or spaces allowed" required>
+</center>
+<br><br>
+<input class= "button" type = "submit" value = "Log In" onclick>
+<hr>
+</form>
+<div class="error"><%=error%></div>
+				<h3>Create New Account</h3>
+				<p>(Password Must Be 8-12 Characters)</p>
+				<form method="post" action="login_page_new">
+					<input type="text" name="user_name_input" placeholder="User Name" minlength="2" maxlength="25" pattern="[a-zA-Z0-9\s]+" title="Only one space allowed, no special characters allowed" required><br><br>
+					<input type="password" name="password" id="password1" placeholder="Password" minlength="8" maxlength="12" pattern="[a-zA-Z0-9]+" title="No special characters or spaces allowed" required><br><br>
+					<input id="password2" type="password" name="confirmpass" placeholder="Confirm Password" minlength="8" maxlength="12" pattern="[a-zA-Z0-9]+" title="No special characters or spaces allowed" required><br><br>	
+					<input class="button" type="submit" value="Create Account">
+				</form>
+			<div class="error"><p id="validate-status"></p></div>
+			<div class="error"><%=error2%></div>
+</body>
+</div>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function() {
+		  $("#password2").keyup(validate);
+		});
+		function validate() {
+		  var password1 = $("#password1").val();
+		  var password2 = $("#password2").val();		 
+		    if(password1 == password2) {
+		       $("#validate-status").text("Password matches");        
+		    }
+		    else {
+		        $("#validate-status").text("Password does not match");  
+		    }		    
+		}
+	</script>

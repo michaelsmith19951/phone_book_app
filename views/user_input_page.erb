@@ -1,0 +1,75 @@
+<center>
+<div class="box_div_user_input_page">
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/layout.css">
+</head>
+<body>
+			<h1>Mike's Phone Book App</h1>
+			<h3><%=user_name_input%></h3>
+			<hr>
+			<h2>Contact Info</h2>
+			<form method="post" action="user_input_page_update">
+				<table>
+					<tr>
+				 		<th>Index</th>
+				 		<th>Name</th>
+				 		<th>Phone Number</th>
+				 		<th>Address</th>
+				 		<th>City</th>
+				 		<th>State</th>
+				 		<th>Zip</th>
+				 	</tr>
+				 	<%counter = 1%>
+				 	<%info.each do |stuff|%>			 		
+					 	<tr>
+					 		<td><%=counter%>
+					 		<input hidden name="index_arr[]" value="<%=stuff[0][0]%>">	
+					 		<input hidden name="number_arr[]" value="<%=counter%>"></td>	
+					 		<td><input type="text" name="name_arr[]" value="<%=stuff[1][0]%>" minlength="2" maxlength="30" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed" required></td>
+							<td><input type="text" name="phone_number_arr[]" value="<%=stuff[2][0]%>" minlength="10" maxlength="10" pattern="[0-9]+" title="Only numbers allowed" required></td>
+					 		<td><input type="text" name="address_arr[]" value="<%=stuff[3][0]%>" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed"></td>
+					 		<td><input type="text" name="city_arr[]" value="<%=stuff[3][0]%>" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed"></td>
+					 		<td><input type="text" name="state_arr[]" value="<%=stuff[3][0]%>" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed"></td>
+					 		<td><input type="text" name="zip_arr[]" value="<%=stuff[3][0]%>" maxlength="45" pattern="[0-9]+" title="Only numbers allowed"></td>
+					 		<input hidden type="text" name="owner_arr[]" value="<%=stuff[5][0]%>">
+					 	</tr>
+					 	<%counter += 1%>						
+				 	<%end%>
+		 		</table><br>
+		 		<input class="button" type="submit" value="Update Info">
+		 	</form>
+		 	<hr>
+		 	<h2>Add Contact</h2>
+			<form method="post" action="user_input_page_add">
+				<input hidden name="number" value="<%=counter%>">
+				<input type="text" name="name_input" placeholder="Name" maxlength="30" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed" required>
+				<input type="text" name="phone_number_input" placeholder="Phone Number" minlength="10" maxlength="10" pattern="[0-9]+" title="Only numbers allowed" required>
+				<input type="text" name="address_input" placeholder="Address" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed">
+				<input type="text" name="city_input" placeholder="City" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed">
+				<input type="text" name="state_input" placeholder="State" maxlength="45" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed">
+				<input type="text" name="zip_input" placeholder="Zip" maxlength="45" pattern="[0-9]+" title="Only numbers allowed">
+				<br><br>
+				<input class="button" type="submit" value="Add Info">				
+			</form>
+			<hr>
+			<h2>Delete Contact</h2>
+		 	<form method="post" action="user_input_page_delete">
+		 		<a>Enter Index Number of Contact to Delete: </a><br><br>
+		 		<%counter -= 1%>
+		 		<input type="number" name="number" pattern="[0-9]+" title="Only numbers allowed" min="1" max="<%=counter%>" required><br><br>
+		 		<%counter = 1%>
+				<%info.each do |stuff|%>			 						 		
+				 	<input hidden name="index_arr[]" value="<%=stuff[0][0]%>">
+				 	<input hidden name="number_arr[]" value="<%=counter%>">
+					<input hidden name="name_arr[]" value="<%=stuff[1][0]%>">
+					<input hidden name="phone_number_arr[]" value="<%=stuff[2][0]%>">
+			 		<input hidden name="address_arr[]" value="<%=stuff[3][0]%>">
+					<input hidden name="city_arr[]" value="<%=stuff[4][0]%>">
+					<input hidden name="state_arr[]" value="<%=stuff[5][0]%>">	
+					<input hidden name="zip_arr[]" value="<%=stuff[6][0]%>"> 		
+					<%counter += 1%>						
+			 	<%end%>
+		 		<input class="button" type="submit" value="Delete Contact">
+		 	</form>
+		</body>
+</div>
