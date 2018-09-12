@@ -5,12 +5,13 @@ require 'bcrypt'
 enable :sessions
 
 load 'local_ENV.rb' if File.exist?('local_ENV.rb')
-client = Mysql2::Client.new(:username => ENV['RDS_USERNAME'], :password => ENV['RDS_PASSWORD'], :host => ENV['RDS_HOSTNAME'], :port => ENV['RDS_PORT'], :database => ENV['RDS_DB_NAME'], :socket => '/tmp/mysql.sock')
 get '/' do
+	session.clear
   	erb :login_page, locals:{error: "", error2: ""}
 end
 
 post '/login_page' do
+	client = Mysql2::Client.new(:username => ENV['RDS_USERNAME'], :password => ENV['RDS_PASSWORD'], :host => ENV['RDS_HOSTNAME'], :port => ENV['RDS_PORT'], :database => ENV['RDS_DB_NAME'], :socket => '/tmp/mysql.sock')
 	user_name_input = params[:user_name_input]
 	user_name_input = client.escape(user_name_input)
 	results2 = client.query("SELECT * FROM useraccounts WHERE `username` = '#{user_name_input}'")
@@ -68,7 +69,9 @@ end
 get '/user_input_page' do
 	client = Mysql2::Client.new(:username => ENV['RDS_USERNAME'], :password => ENV['RDS_PASSWORD'], :host => ENV['RDS_HOSTNAME'], :port => ENV['RDS_PORT'], :database => ENV['RDS_DB_NAME'], :socket => '/tmp/mysql.sock')
 	user_name_input = session[:user_name_input]
+	p user_name_input
 	user_name_input = client.escape(user_name_input)
+	p user_name_input
 	results3 = client.query("SELECT * FROM usertable")
 	p "!!!#{results3}"
 	results = client.query("SELECT * FROM usertable WHERE `owner`='#{user_name_input}'")
@@ -117,7 +120,6 @@ post '/user_input_page_update' do
 	state_arr = params[:state_arr]
 	zip_arr = params[:zip_arr]
 	user_name_input = session[:user_name_input]
-	user_name_input = client.escape(user_name_input)
 	counter = 0
 	unless number_arr == nil
 		number_arr.each do |ind|
