@@ -77,7 +77,7 @@ get '/user_input_page' do
 	results = client.query("SELECT * FROM usertable WHERE `owner`='#{user_name_input}'")
 	info = []
   		results.each do |row|
-    	info << [[row['number']], [row['name_input']], [row['phone_number_input']], [row['address_input']], [row['city_input']], [row['state_input']], [row['zip_input']], [row['owner']]]
+    	info << [[row['number']], [row['name_input']], [row['phone_number_input']], [row['address_input']], [row['city_input']], [row['state_input']], [row['zip_input']], [row['owner']], [row['PK']]]
  	end
  	client.close
 	erb :user_input_page, locals:{info: info, user_name_input: session[:user_name_input]}
@@ -105,13 +105,14 @@ post '/user_input_page_add' do
   	results = client.query("SELECT * FROM usertable WHERE `owner`='#{user_name_input}'")
 	info = []
   	results.each do |row|
-    	info << [[row['number']], [row['name_input']], [row['phone_number_input']], [row['address_input']], [row['city_input']], [row['state_input']], [row['zip_input']], [row['owner']]]
+    	info << [[row['number']], [row['name_input']], [row['phone_number_input']], [row['address_input']], [row['city_input']], [row['state_input']], [row['zip_input']], [row['owner']], [row['PK']]]
  	end
  	client.close
 	erb :user_input_page, locals:{info: info, user_name_input: session[:user_name_input]}
 end
 post '/user_input_page_update' do
 	client = Mysql2::Client.new(:username => ENV['RDS_USERNAME'], :password => ENV['RDS_PASSWORD'], :host => ENV['RDS_HOSTNAME'], :port => ENV['RDS_PORT'], :database => ENV['RDS_DB_NAME'], :socket => '/tmp/mysql.sock')
+	index_arr = params[:index_arr]
 	number_arr = params[:number_arr]
 	name_arr = params[:name_arr]
 	phone_number_arr = params[:phone_number_arr]
@@ -121,36 +122,38 @@ post '/user_input_page_update' do
 	zip_arr = params[:zip_arr]
 	user_name_input = session[:user_name_input]
 	counter = 0
-	unless number_arr == nil
-		number_arr.each do |ind|
+	unless index_arr == nil
+		index_arr.each do |ind|
 			ind = client.escape(ind)
 			number_arr[counter] = client.escape(number_arr[counter])
-			client.query("UPDATE `usertable` SET `number`='#{number_arr[counter]}' WHERE `owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `number`='#{number_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
 			name_arr[counter] = client.escape(name_arr[counter])
-			client.query("UPDATE `usertable` SET `name_input`='#{name_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `name_input`='#{name_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
 			phone_number_arr[counter] = client.escape(phone_number_arr[counter])
-			client.query("UPDATE `usertable` SET `phone_number_input`='#{phone_number_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `phone_number_input`='#{phone_number_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
 			address_arr[counter] = client.escape(address_arr[counter])
-			client.query("UPDATE `usertable` SET `address_input`='#{address_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `address_input`='#{address_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
 			city_arr[counter] = client.escape(city_arr[counter])
-			client.query("UPDATE `usertable` SET `city_input`='#{city_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `city_input`='#{city_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
 			state_arr[counter] = client.escape(state_arr[counter])
-			client.query("UPDATE `usertable` SET `state_input`='#{state_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `state_input`='#{state_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
 			zip_arr[counter] = client.escape(zip_arr[counter])
-			client.query("UPDATE `usertable` SET `zip_input`='#{zip_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
+			client.query("UPDATE `usertable` SET `zip_input`='#{zip_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
 			counter += 1
 		end
 	end
 	results = client.query("SELECT * FROM usertable WHERE `owner`='#{user_name_input}'")
 	info = []
   	results.each do |row|
-    	info << [[row['number']], [row['name_input']], [row['phone_number_input']], [row['address_input']], [row['city_input']], [row['state_input']], [row['zip_input']], [row['owner']]]
+    	info << [[row['number']], [row['name_input']], [row['phone_number_input']], [row['address_input']], [row['city_input']], [row['state_input']], [row['zip_input']], [row['owner']], [row['PK']]]
  	end
+ 	p info
  	client.close
 	erb :user_input_page, locals:{info: info, user_name_input: session[:user_name_input]}
 end
 post '/user_input_page_delete' do
 	client = Mysql2::Client.new(:username => ENV['RDS_USERNAME'], :password => ENV['RDS_PASSWORD'], :host => ENV['RDS_HOSTNAME'], :port => ENV['RDS_PORT'], :database => ENV['RDS_DB_NAME'], :socket => '/tmp/mysql.sock')
+	index_arr = params[:index_arr]
 	phone_number = params[:phone_number]
 	p "#{phone_number} is on user input page delete"
 	number_arr = params[:number_arr]
@@ -171,33 +174,33 @@ post '/user_input_page_delete' do
 	p "#{user_name_input} is on user input page delete"
 	user_name_input = client.escape(user_name_input)
 	counter = 0
-	# unless number_arr == nil
-	# 	number_arr.each do |ind|
-	# 		ind = client.escape(ind)
-	# 		number_arr[counter] = client.escape(number_arr[counter])
-	# 		client.query("UPDATE `usertable` SET `number`='#{number_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
-	# 		name_arr[counter] = client.escape(name_arr[counter])
-	# 		client.query("UPDATE `usertable` SET `name_input`='#{name_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
-	# 		phone_number_arr[counter] = client.escape(phone_number_arr[counter])
-	# 		client.query("UPDATE `usertable` SET `phone_number_input`='#{phone_number_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
-	# 		address_arr[counter] = client.escape(address_arr[counter])
-	# 		client.query("UPDATE `usertable` SET `address_input`='#{address_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
-	# 		city_arr[counter] = client.escape(city_arr[counter])
-	# 		client.query("UPDATE `usertable` SET `city_input`='#{city_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
-	# 		state_arr[counter] = client.escape(state_arr[counter])
-	# 		client.query("UPDATE `usertable` SET `state_input`='#{state_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
-	# 		zip_arr[counter] = client.escape(zip_arr[counter])
-	# 		client.query("UPDATE `usertable` SET `zip_input`='#{zip_arr[counter]}' WHERE `number`='#{ind}' AND `owner`='#{user_name_input}'")
+	unless index_arr == nil
+		index_arr.each do |ind|
+			ind = client.escape(ind)
+			number_arr[counter] = client.escape(number_arr[counter])
+			client.query("UPDATE `usertable` SET `number`='#{number_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
+			name_arr[counter] = client.escape(name_arr[counter])
+			client.query("UPDATE `usertable` SET `name_input`='#{name_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
+			phone_number_arr[counter] = client.escape(phone_number_arr[counter])
+			client.query("UPDATE `usertable` SET `phone_number_input`='#{phone_number_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
+			address_arr[counter] = client.escape(address_arr[counter])
+			client.query("UPDATE `usertable` SET `address_input`='#{address_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
+			city_arr[counter] = client.escape(city_arr[counter])
+			client.query("UPDATE `usertable` SET `city_input`='#{city_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
+			state_arr[counter] = client.escape(state_arr[counter])
+			client.query("UPDATE `usertable` SET `state_input`='#{state_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
+			zip_arr[counter] = client.escape(zip_arr[counter])
+			client.query("UPDATE `usertable` SET `zip_input`='#{zip_arr[counter]}' WHERE `PK`='#{ind}' AND `owner`='#{user_name_input}'")
 
-	# 		counter += 1
-	# 	end
-	# end
+			counter += 1
+		end
+	end
 	phone_number = client.escape(phone_number)
-	client.query("DELETE FROM `usertable` WHERE `phone_number_input`='#{phone_number}' AND `owner`='#{user_name_input}'")
+	client.query("DELETE FROM `usertable` WHERE `number`='#{phone_number}' AND `owner`='#{user_name_input}'")
 	results = client.query("SELECT * FROM usertable WHERE `owner`='#{user_name_input}'")
 	info = []
   	results.each do |row|
-    	info << [[row['number']], [row['name_input']], [row['phone_number_input']], [row['address_input']], [row['city_input']], [row['state_input']], [row['zip_input']], [row['owner']]]
+    	info << [[row['number']], [row['name_input']], [row['phone_number_input']], [row['address_input']], [row['city_input']], [row['state_input']], [row['zip_input']], [row['owner']], [row['PK']]]
  	end
  	client.close
 	erb :user_input_page, locals:{info: info, user_name_input: session[:user_name_input]}

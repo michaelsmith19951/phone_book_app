@@ -25,6 +25,7 @@
 				 	<%info.each do |stuff|%>			 		
 					 	<tr>
 					 		<td><%=counter%>
+					 		<input hidden name="index_arr[]" value="<%=stuff[8][0]%>">
 					 		<input hidden name="number_arr[]" value="<%=counter%>"></td>	
 					 		<td><input type="text" name="name_arr[]" value="<%=stuff[1][0]%>" minlength="2" maxlength="30" pattern="[a-zA-Z0-9\s]+" title="No special characters allowed" required></td>
 							<td><input type="text" name="phone_number_arr[]" value="<%=stuff[2][0]%>" minlength="10" maxlength="10" pattern="[0-9]+" title="Only numbers allowed" required></td>
@@ -55,9 +56,9 @@
 			<hr>
 			<h2>Delete Contact</h2>
 		 	<form method="post" action="user_input_page_delete">
-		 		<a>Enter Phone Number of Contact to Delete: </a><br><br>
+		 		<a>Enter Index Number of Contact to Delete: </a><br><br>
 		 		<%counter -= 1%>
-		 		<input type="number" name="phone_number" pattern="[0-9]+" title="Only numbers allowed" min="1" required><br><br>
+		 		<input type="number" name="phone_number" pattern="[0-9]+" title="Only numbers allowed" min="1" max="<%=counter%>" required><br><br>
 		 		<%counter = 1%>
 				<%info.each do |stuff|%>			 						 		
 				 	<input hidden name="number_arr[]" value="<%=counter%>">
@@ -67,7 +68,8 @@
 					<input hidden name="city_arr[]" value="<%=stuff[4][0]%>">
 					<input hidden name="state_arr[]" value="<%=stuff[5][0]%>">	
 					<input hidden name="zip_arr[]" value="<%=stuff[6][0]%>"> 
-					<input hidden name="owner_arr[]" value="<%=stuff[7][0]%>">		
+					<input hidden name="owner_arr[]" value="<%=stuff[7][0]%>">
+					<input hidden name="index_arr[]" value="<%=stuff[8][0]%>">		
 					<%counter += 1%>						
 			 	<%end%>
 		 		<input class="button" type="submit" value="Delete">
